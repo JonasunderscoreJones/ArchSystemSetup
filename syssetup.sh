@@ -10,6 +10,9 @@ if [[ "$1" == "--help" || "$2" == "--help" ]]; then
     exit 0
 fi
 
+# Keep the sudo session alive
+while true; do sudo -v; sleep 60; done &
+
 # run the commands
 install_chaoticaur
 install_yay_aur
