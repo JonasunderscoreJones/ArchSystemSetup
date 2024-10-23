@@ -87,6 +87,7 @@ install_sdkman() {
     # Command from the sdkman website
     curl -s "https://get.sdkman.io" | bash
     source "$HOME/.sdkman/bin/sdkman-init.sh"
+    sdk install java 21.0.3-oracle
 }
 
 install_ghcup() {
