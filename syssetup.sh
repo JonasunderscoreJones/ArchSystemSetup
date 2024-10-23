@@ -89,12 +89,12 @@ install_flatpaks() {
     sudo pacman -S flatpak --noconfirm
 
     # Install the flatpaks
-    curl -s https://syssetup.jonasjones.dev/flatpaks | xargs -n 1 flatpak install --noninteractive --assumeyes
+    curl -s https://syssetup.jonasjones.dev/flatpaks | tr '\n' ' ' | flatpak install --noninteractive --assumeyes
 }
 
 install_packages() {
     # Install the packages
-    curl -s https://syssetup.jonasjones.dev/packages | xargs -n 1 yay -S --noconfirm
+    curl -s https://syssetup.jonasjones.dev/packages | tr '\n' ' ' | yay -S --noconfirm
 }
 
 install_gnome_extensions() {
