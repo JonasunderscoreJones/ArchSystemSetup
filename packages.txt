@@ -121,3 +121,4 @@ syncthing
 gnome-tweaks
 wrangler
 networkmananger
+gnome-shell-extension

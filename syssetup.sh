@@ -19,6 +19,7 @@ install_firefox_theme
 install_sdkman
 install_ghcup
 remove_packages
+install_gnome_extensions
 
 install_yay_aur() {
     sudo pacman -S yay --noconfirm
@@ -82,5 +83,11 @@ install_flatpaks() {
 install_packages() {
     # Install the packages
     curl -s https://syssetup.jonasjones.dev/packages | xargs -n 1 yay -S --noconfirm
+}
+
+install_gnome_extensions() {
+    # Install the gnome extensions
+    curl -s https://syssetup.jonasjones.dev/gextensions | xargs -n 1 gnome-extensions install --yes
+    curl -s https://syssetup.jonasjones.dev/gextensions | xargs -n 1 gnome-extensions enable --yes
 }
 
