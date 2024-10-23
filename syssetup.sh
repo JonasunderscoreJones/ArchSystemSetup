@@ -15,18 +15,32 @@ logger() {
     echo -e "\e[32m$message\e[0m"
 }
 
+# welcome message
+logger "Welcome to the system setup script!"
+logger "This script will install a bunch of packages, flatpaks, gnome extensions, and more."
+
 # Keep the sudo session alive
+logger "Requesting sudo session..."
 while true; do sudo -v; sleep 60; done &
 
 # run the commands
+logger "Installing Chaotic AUR..."
 install_chaoticaur
+logger "Installing yay AUR helper..."
 install_yay_aur
+logger "Installing system packages..."
 install_packages
+logger "Installing flatpaks..."
 install_flatpaks
+logger "Installing firefox theme..."
 install_firefox_theme
+logger "Installing sdkman..."
 install_sdkman
+logger "Installing ghcup..."
 install_ghcup
+logger "Removing unwanted gnome apps..."
 remove_packages
+logger "Installing gnome extensions..."
 install_gnome_extensions
 
 install_yay_aur() {
