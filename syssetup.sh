@@ -27,6 +27,15 @@ install_yay_aur() {
     sudo pacman -Syyu yay --noconfirm
 }
 
+change_pacman_config() {
+    # Change the pacman config to make it colorful
+    sudo sed -i 's/#Color/Color/g' /etc/pacman.conf
+    sudo sed -i 's/#TotalDownload/TotalDownload/g' /etc/pacman.conf
+    sudo sed -i 's/#VerbosePkgLists/VerbosePkgLists/g' /etc/pacman.conf
+    sudo sed -i 's/#ParallelDownloads/ParallelDownloads/g' /etc/pacman.conf
+    sudo sed -i '/ParallelDownloads/a ILoveCandy' /etc/pacman.conf
+}
+
 install_chaoticaur() {
     sudo pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
     sudo pacman-key --lsign-key 3056513887B78AEB
@@ -95,6 +104,8 @@ install_gnome_extensions() {
 }
 
 # run the commands
+logger "Changing pacman config..."
+change_pacman_config
 logger "Installing Chaotic AUR..."
 install_chaoticaur
 logger "Installing yay AUR helper..."
