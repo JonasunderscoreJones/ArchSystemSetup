@@ -1,0 +1,146 @@
+- wifi networks
+- show battery percentage
+- automatic suspend only on battery power
+- dark mode
+- touchpad scroll direction traditional
+- keyboard layout english us intl with dead keys
+- keyboard korean hangul
+- shortcut move window one workspace to the left Shift+Super+Page Down
+- shortcut move window one workspace to the right Shfit+Super+Page Up
+- shortcut switch applications disabled
+- shortcut switch windows Alt+Tab
+- shortcut next track Shift+F12
+- shortcut play or pause Shift+F11
+- shortcut previous track Shif+F10
+- close windows Ctrl+Q
+- time format 24h
+
+- Font to JetBrains Mono (which variant?)
+- icon pack Mkos-Big-Sur-Night
+- maximize button
+- minimize button
+- resize with secondary click
+
+- wallpaper
+- gnome extensions:
+	- alphabetical app grid
+	- battery time
+	- blur my shell
+	- caffeine
+	- clipboard history
+	- color picker
+	- compiz alike magic lamp effect
+	- dash to dock
+	- ddterm
+	- disable unredirect fullscreen windows
+	- fullscreen avoider
+	- fullscreen hotcorner
+	- fullscreen to empty workspace
+	- grand theft focus
+	- impatience
+	- just perfection
+	- media label and controls
+	- netlabel
+	- night theme switcher
+	- power profile switcher
+	- quick settings tweaker
+	- rounded corners
+	- rounded window corners reborn
+	- soft brightness plus
+	- supergfxctl-gex
+	- tray icons reloaded
+	- removable drive menu
+	- system monitor
+- with all their settings
+
+
+- sdkman
+- ghci
+
+
+- flatpaks:
+	- gnome tweaks
+	- paper clip
+	- adwsteamgtk
+
+
+
+- system packages:
+	- aseprite
+	- blockbench
+	- blueman
+	- cisco anyconnect uni VPN
+	- cpupower-gui
+	- firefox
+	- jetbrains-toolbox
+	- lutris
+	- nvidia-settings
+	- qjoypad
+	- scrcpy
+	- vim
+	- realvnc-vnc-viewer
+	- pavucontrol
+	- android-tools
+	- adb
+	- nvtop
+	- xeyes / xeyes-git
+	- firefox-pwa
+	- cowsay
+	- cargo
+	- rustc
+	- npx
+	- docker
+	- img2pdf
+	- stat
+	- python-pycodestyle
+	- python-pyautogui
+	- python-pygame
+	- python-pylint
+	- python-tk
+	- python-matplotlib
+	- python-praw
+	- python-spotipy
+	- python-dotenv
+	- python-markdown
+	- python-numpy
+	- python-pylast
+	- python-psotipy
+	- python-pip
+	- pyright
+	- spotipy
+	- spicetify
+	- jq
+	- php
+	- cuda-tools
+	- cloudflare-wrangler
+	- man
+	- alsa-utils
+	- dpkg
+	- mkfs.vfat
+	- fdisk
+	- rclone
+	- nvidia-prime
+	- rpm
+	- eigen gtk2 libjpeg-turbo libjpeg9 libtiff4 jasper openexr cmake yasm faac opencore-amr libtheora libvorbis xvidcore x264 sphinx texlive-latexextra v4l-utils libdc1394
+	- python-tk yasm faac opencore-amr libtheora libvorbis xvidcore x264 sphinx texlive-latexextra v4l-utils libdc1394
+	- bluez-utils
+	- bluetoothctl
+	- browsh-bin
+	- imagemagick
+	- fprintd
+	- zip
+	- supergfxctl
+	- nvidia
+	- mesa lib32-mesa xf86-video-intel vulkan-intel intel-hybrid-codec-driver linux-firmware intel-media-driver
+	- wget
+	- noto-fonts-emoji
+	- ark
+	- ibus
+	- ibus-hangul
+	- github-cli
+	- libadwaita
+	- yay
+	- pipewire
+	- pipewire-pulse
+	- syncthing
+	- gnome-tweaks

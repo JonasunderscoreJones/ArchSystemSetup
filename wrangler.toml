@@ -1,0 +1,3 @@
+name = "arch-setup-worker"
+main = "worker.js"
+compatibility_date = "2023-09-04"
