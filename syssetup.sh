@@ -10,26 +10,25 @@ if [[ "$1" == "--help" || "$2" == "--help" ]]; then
     exit 0
 fi
 
-# Default values
-MAINUSER = $USER
+# run the commands
+install_chaoticaur
+install_yay_aur
+install_packages
+install_flatpaks
+install_firefox_theme
+install_sdkman
+install_ghcup
+remove_packages
 
-# Use provided arguments or defaults
-
-
-install_flatpaks() {
-    # Install flatpak
-    pacman -S flatpak --no-confirm
-
-    # Install the flatpaks
-    curl -s https://syssetup.jonasjones.dev/flatpaks | xargs -n 1 flatpak install --noninteractive --assumeyes
+install_yay_aur() {
+    sudo pacman -S yay --noconfirm
 }
 
-
 install_chaoticaur() {
-    sudo pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
-    sudo pacman-key --lsign-key 3056513887B78AEB
-    sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst'
-    sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
+    sudo pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com --noconfirm
+    sudo pacman-key --lsign-key 3056513887B78AEB --noconfirm
+    sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' --noconfirm
+    sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' --noconfirm
     echo "Appending to /etc/pacman.conf..."
 
     if ! grep -q '\[chaotic-aur\]' /etc/pacman.conf; then
@@ -70,5 +69,18 @@ install_sdkman() {
 install_ghcup() {
     # Command from the ghcup website
     curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
+}
+
+install_flatpaks() {
+    # Install flatpak
+    sudo pacman -S flatpak --no-confirm
+
+    # Install the flatpaks
+    curl -s https://syssetup.jonasjones.dev/flatpaks | xargs -n 1 flatpak install --noninteractive --assumeyes
+}
+
+install_packages() {
+    # Install the packages
+    curl -s https://syssetup.jonasjones.dev/packages | xargs -n 1 yay -S --noconfirm
 }
 
