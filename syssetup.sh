@@ -23,26 +23,6 @@ logger "This script will install a bunch of packages, flatpaks, gnome extensions
 logger "Requesting sudo session..."
 while true; do sudo -v; sleep 60; done &
 
-# run the commands
-logger "Installing Chaotic AUR..."
-install_chaoticaur
-logger "Installing yay AUR helper..."
-install_yay_aur
-logger "Installing system packages..."
-install_packages
-logger "Installing flatpaks..."
-install_flatpaks
-logger "Installing firefox theme..."
-install_firefox_theme
-logger "Installing sdkman..."
-install_sdkman
-logger "Installing ghcup..."
-install_ghcup
-logger "Removing unwanted gnome apps..."
-remove_packages
-logger "Installing gnome extensions..."
-install_gnome_extensions
-
 install_yay_aur() {
     sudo pacman -S yay --noconfirm
 }
@@ -113,4 +93,24 @@ install_gnome_extensions() {
     curl -s https://syssetup.jonasjones.dev/gextensions | xargs -n 1 gnome-extensions install --yes
     curl -s https://syssetup.jonasjones.dev/gextensions | xargs -n 1 gnome-extensions enable --yes
 }
+
+# run the commands
+logger "Installing Chaotic AUR..."
+install_chaoticaur
+logger "Installing yay AUR helper..."
+install_yay_aur
+logger "Installing system packages..."
+install_packages
+logger "Installing flatpaks..."
+install_flatpaks
+logger "Installing firefox theme..."
+install_firefox_theme
+logger "Installing sdkman..."
+install_sdkman
+logger "Installing ghcup..."
+install_ghcup
+logger "Removing unwanted gnome apps..."
+remove_packages
+logger "Installing gnome extensions..."
+install_gnome_extensions
 
