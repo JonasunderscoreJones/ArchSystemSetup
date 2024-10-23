@@ -21,7 +21,7 @@ install_flatpaks() {
     pacman -S flatpak --no-confirm
 
     # Install the flatpaks
-    curl -s https://example.com/flatpaks.txt | xargs -n 1 flatpak install --noninteractive --assumeyes
+    curl -s https://syssetup.jonasjones.dev/flatpaks | xargs -n 1 flatpak install --noninteractive --assumeyes
 }
 
 
