@@ -6,7 +6,7 @@ export default {
         // Check if the request path is '/'
         if (url.pathname === '/') {
             // Fetch the shell script file
-            const script = await fetch('https://raw.githubusercontent.com/JonasunderscoreJones/ArchSystemSetup/refs/heads/master/syssetup.sh');
+            const script = await fetch('https://raw.githubusercontent.com/JonasunderscoreJones/ArchSystemSetup/refs/heads/main/syssetup.sh');
             const scriptText = await script.text();
 
             return new Response(scriptText, {
@@ -19,7 +19,7 @@ export default {
 
         if (url.pathname === '/flatpaks') {
             // Fetch the shell script file
-            const script = await fetch('https://raw.githubusercontent.com/JonasunderscoreJones/ArchSystemSetup/refs/heads/master/flatpaks.txt');
+            const script = await fetch('https://raw.githubusercontent.com/JonasunderscoreJones/ArchSystemSetup/refs/heads/main/flatpaks.txt');
             const scriptText = await script.text();
 
             return new Response(scriptText, {
@@ -32,7 +32,7 @@ export default {
 
         if (url.pathname === '/packages') {
             // Fetch the shell script file
-            const script = await fetch('https://raw.githubusercontent.com/JonasunderscoreJones/ArchSystemSetup/refs/heads/master/packages.txt');
+            const script = await fetch('https://raw.githubusercontent.com/JonasunderscoreJones/ArchSystemSetup/refs/heads/main/packages.txt');
             const scriptText = await script.text();
 
             return new Response(scriptText, {
