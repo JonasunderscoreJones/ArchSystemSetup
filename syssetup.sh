@@ -24,7 +24,7 @@ logger "Requesting sudo session..."
 while true; do sudo -v; sleep 60; done &
 
 install_yay_aur() {
-    sudo pacman -S yay --noconfirm
+    sudo pacman -Syyu yay --noconfirm
 }
 
 install_chaoticaur() {
@@ -77,7 +77,7 @@ install_ghcup() {
 
 install_flatpaks() {
     # Install flatpak
-    sudo pacman -S flatpak --no-confirm
+    sudo pacman -S flatpak --noconfirm
 
     # Install the flatpaks
     curl -s https://syssetup.jonasjones.dev/flatpaks | xargs -n 1 flatpak install --noninteractive --assumeyes
