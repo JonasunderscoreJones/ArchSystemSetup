@@ -3,11 +3,12 @@ batterytime@typeof.pw
 blur-my-shell@aunetx
 caffeine@patapon.info
 clipboard-history@alexsaveau.dev
+clipboard-indicator@tudmotu.com
 color-picker@tuberry
 compiz-alike-magic-lamp-effect@hermes83.github.com
 dash-to-dock@micxgx.gmail.com
 ddterm@amezin.github.com
-unredirect@vaina.lt
+drive-menu@gnome-shell-extensions.gcampax.github.com
 fullscreen-avoider@noobsai.github.com
 fullscreen-hot-corner@sorrow.about.alice.pm.me
 fullscreen-to-empty-workspace@aiono.dev
@@ -22,7 +23,6 @@ Rounded_Corners@lennart-k
 rounded-window-corners@fxgn
 soft-brightness-plus@joelkitching.com
 supergfxctl-gex@asus-linux.org
-trayIconsReloaded@selfmade.pl
-clipboard-indicator@tudmotu.com
-drive-menu@gnome-shell-extensions.gcampax.github.com
 system-monitor@gnome-shell-extensions.gcampax.github.com
+trayIconsReloaded@selfmade.pl
+unredirect@vaina.lt
