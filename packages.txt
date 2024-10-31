@@ -122,3 +122,4 @@ gnome-tweaks
 wrangler
 networkmananger
 gnome-shell-extension
+sl
