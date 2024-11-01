@@ -1,5 +1,10 @@
 #!/bin/bash
 
+FIREFOX_THEME_URL = "https://raw.githubusercontent.com/rafaelmardojai/firefox-gnome-theme/master/scripts/install-by-curl.sh"
+
+FLATPAK_LIST_URL = "https://syssetup.jonasjones.dev/flatpaks"
+PACKAGES_LIST_URL = "https://syssetup.jonasjones.dev/packages"
+
 # Check for --help argument
 if [[ "$1" == "--help" || "$2" == "--help" ]]; then
     echo "Usage: ./script_name.sh [user]"
@@ -22,6 +27,20 @@ logger "This script will install a bunch of packages, flatpaks, gnome extensions
 # Keep the sudo session alive
 logger "Requesting sudo session..."
 while true; do sudo -v; sleep 60; done &
+
+
+download_file() {
+    local url="$1"
+    local filename="$2"
+
+    # Download the file
+    if curl -s -o "$filename" "$url"; then
+        logger "Downloaded successfully: $filename"
+    else
+        logger "Error: Failed to download from $url" >&2
+        exit 1
+    fi
+}
 
 install_yay_aur() {
     sudo pacman -Syyu yay --noconfirm
@@ -69,7 +88,7 @@ remove_packages() {
 
 install_firefox_theme() {
     # Command from the firefrox theme github page
-    curl -s -o- https://raw.githubusercontent.com/rafaelmardojai/firefox-gnome-theme/master/scripts/install-by-curl.sh | bash
+    curl -s -o- $FIREFOX_THEME_URL | bash
 }
 
 install_sdkman() {
@@ -88,13 +107,25 @@ install_flatpaks() {
     # Install flatpak
     sudo pacman -S flatpak --noconfirm
 
+    # Download flatpak list
+    download_file $FLATPAK_LIST_URL "flatpaks.txt"
+
     # Install the flatpaks
-    curl -s https://syssetup.jonasjones.dev/flatpaks | tr '\n' ' ' | flatpak install --noninteractive --assumeyes
+    flatpak install --noninteractive --assumeyes - < flatpaks.txt
+
+    # Remove the flatpaks file
+    rm flatpaks.txt
 }
 
 install_packages() {
+    # Download the packages list
+    download_file $PACKAGES_LIST_URL "packages.txt"
+
     # Install the packages
-    curl -s https://syssetup.jonasjones.dev/packages | tr '\n' ' ' | yay -S --noconfirm
+    yay -S --noconfirm - < packages.txt
+
+    # remove the packages file
+    rm packages.txt
 }
 
 install_gnome_extensions() {
