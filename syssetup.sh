@@ -119,7 +119,7 @@ install_ghcup() {
 }
 
 install_flatpaks() {
-    # Install flatpak
+    # Install flatpak package
     sudo pacman -S flatpak --noconfirm
 
     # Download flatpak list
