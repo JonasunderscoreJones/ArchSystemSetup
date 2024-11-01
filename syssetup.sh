@@ -75,13 +75,13 @@ install_chaoticaur() {
     sudo pacman-key --lsign-key 3056513887B78AEB
     sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' --noconfirm
     sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' --noconfirm
-    echo "Appending to /etc/pacman.conf..."
+    logger "Appending to /etc/pacman.conf..."
 
     if ! grep -q '\[chaotic-aur\]' /etc/pacman.conf; then
         echo -e "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist" | sudo tee -a /etc/pacman.conf > /dev/null
-        echo "Successfully appended to /etc/pacman.conf."
+        logger "Successfully appended to /etc/pacman.conf."
     else
-        echo "[chaotic-aur] section already exists in /etc/pacman.conf."
+        logger "[chaotic-aur] section already exists in /etc/pacman.conf."
     fi
 }
 
