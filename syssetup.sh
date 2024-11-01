@@ -4,6 +4,7 @@ FIREFOX_THEME_URL = "https://raw.githubusercontent.com/rafaelmardojai/firefox-gn
 
 FLATPAK_LIST_URL = "https://syssetup.jonasjones.dev/flatpaks"
 PACKAGES_LIST_URL = "https://syssetup.jonasjones.dev/packages"
+GEXTENSIONS_LIST_URL = "https://syssetup.jonasjones.dev/gextensions"
 
 # Check for --help argument
 if [[ "$1" == "--help" || "$2" == "--help" ]]; then
@@ -41,6 +42,20 @@ download_file() {
         exit 1
     fi
 }
+
+
+install_gextension() {
+    local i="$1"
+    VERSION_TAG=$(curl -Lfs "https://extensions.gnome.org/extension-query/?search=${i}" | jq '.extensions[0] | .shell_version_map | map(.pk) | max')
+    wget -O ${i}.zip "https://extensions.gnome.org/download-extension/${i}.shell-extension.zip?version_tag=$VERSION_TAG"
+    gnome-extensions install --force ${i}.zip
+    if ! gnome-extensions list | grep --quiet ${i}; then
+        busctl --user call org.gnome.Shell.Extensions /org/gnome/Shell/Extensions org.gnome.Shell.Extensions InstallRemoteExtension s ${i}
+    fi
+    gnome-extensions enable ${i}
+    rm ${i}.zip
+}
+
 
 install_yay_aur() {
     sudo pacman -Syyu yay --noconfirm
@@ -129,9 +144,18 @@ install_packages() {
 }
 
 install_gnome_extensions() {
+    # download the gnome extensions list
+    download_file $GEXTENSIONS_LIST_URL "gextensions.txt"
+
     # Install the gnome extensions
-    curl -s https://syssetup.jonasjones.dev/gextensions | xargs -n 1 gnome-extensions install --yes
-    curl -s https://syssetup.jonasjones.dev/gextensions | xargs -n 1 gnome-extensions enable --yes
+    while IFS= read -r line; do
+        if [[ -n "$line" ]]; then
+            install_gextension "$line"
+        fi
+    done < gextensions.txt
+
+    # Remove the gnome extensions file
+    rm gextensions.txt
 }
 
 # run the commands
