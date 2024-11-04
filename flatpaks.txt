@@ -22,7 +22,9 @@ dev.lasheen.qr
 fr.romainvigier.MetadataCleaner
 io.github.arunsivaramanneo.GPUViewer
 io.github.diegoivan.pdf_metadata_editor
+io.github.flattool.Warehouse
 io.github.Foldex.AdwSteamGtk
+io.gitlab.gregorni.Letterpress
 io.github.jonmagon.kdiskmark
 io.github.prateekmedia.appimagepool
 io.github.realmazharhussain.GdmSettings

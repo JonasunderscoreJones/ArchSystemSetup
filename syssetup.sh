@@ -6,6 +6,20 @@ FLATPAK_LIST_URL = "https://syssetup.jonasjones.dev/flatpaks"
 PACKAGES_LIST_URL = "https://syssetup.jonasjones.dev/packages"
 GEXTENSIONS_LIST_URL = "https://syssetup.jonasjones.dev/gextensions"
 
+FONT_URL="https://download.jetbrains.com/fonts/JetBrainsMono-2.304.zip"
+TEMP_DIR=$(mktemp -d)
+FONT_DIR="$HOME/.fonts"
+TTF_DIR="$TEMP_DIR/fonts/ttf"
+DEFAULT_FONT="JetBrainsMonoNL-Bold.ttf"
+
+ICONPACK_URL="https://github.com/zayronxio/Mkos-Big-Sur/releases/download/0.3/Mkos-Big-Sur.tar.xz"
+TEMP_DIR=$(mktemp -d)
+ICON_DIR="$HOME/.icons"
+ICONPACK_NAME="Mkos-Big-Sur"
+
+WALLPAPER_URL="https://raw.githubusercontent.com/JonasunderscoreJones/ArchSystemSetup/refs/heads/main/wallpaper.jpg"
+WALLPAPER_PATH="$HOME/Pictures/wallpaper.jpg"
+
 # Check for --help argument
 if [[ "$1" == "--help" || "$2" == "--help" ]]; then
     echo "Usage: ./script_name.sh [user]"
