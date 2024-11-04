@@ -20,28 +20,10 @@ ICONPACK_NAME="Mkos-Big-Sur"
 WALLPAPER_URL="https://raw.githubusercontent.com/JonasunderscoreJones/ArchSystemSetup/refs/heads/main/wallpaper.jpg"
 WALLPAPER_PATH="$HOME/Pictures/wallpaper.jpg"
 
-# Check for --help argument
-if [[ "$1" == "--help" || "$2" == "--help" ]]; then
-    echo "Usage: ./script_name.sh [user]"
-    echo ""
-    echo "Optional Arguments:"
-    echo "  user            user under which to install everything (default: $USER)"
-    echo "  --help          Display this help message"
-    exit 0
-fi
-
 logger() {
     local message="$1"
     echo -e "\e[32m$message\e[0m"
 }
-
-# welcome message
-logger "Welcome to the system setup script!"
-logger "This script will install a bunch of packages, flatpaks, gnome extensions, and more."
-
-# Keep the sudo session alive
-logger "Requesting sudo session..."
-while true; do sudo -v; sleep 60; done &
 
 
 download_file() {
@@ -326,33 +308,58 @@ install_gnome_extensions() {
     rm gextensions.txt
 }
 
-# run the commands
-logger "Changing pacman config..."
-change_pacman_config
-logger "Installing Chaotic AUR..."
-install_chaoticaur
-logger "Installing yay AUR helper..."
-install_yay_aur
-logger "Installing system packages..."
-install_packages
-logger "Installing flatpaks..."
-install_flatpaks
-logger "Installing firefox theme..."
-install_firefox_theme
-logger "Installing sdkman..."
-install_sdkman
-logger "Installing ghcup..."
-install_ghcup
-logger "Removing unwanted gnome apps..."
-remove_packages
-logger "Installing gnome extensions..."
-install_gnome_extensions
-logger "Adding wifi networks..."
-add_wifi_networks
-logger "Installing fonts..."
-install_fonts
-logger "Installing icon pack..."
-install_icon_pack
-logger "Changing gnome settings..."
-change_gnome_settings
+# Check if the script is sourced or executed
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    # Check for --help argument
+    if [[ "$1" == "--help" || "$2" == "--help" ]]; then
+        echo "Usage: ./script_name.sh [user]"
+        echo ""
+        echo "Optional Arguments:"
+        echo "  user            user under which to install everything (default: $USER)"
+        echo "  --help          Display this help message"
+        exit 0
+    fi
+
+    # welcome message
+    logger "Welcome to the system setup script!"
+    logger "This script will install a bunch of packages, flatpaks, gnome extensions, and more."
+
+    # Keep the sudo session alive
+    logger "Requesting sudo session..."
+    while true; do sudo -v; sleep 60; done &
+
+    # run the commands
+    logger "Changing pacman config..."
+    change_pacman_config
+    logger "Installing Chaotic AUR..."
+    install_chaoticaur
+    logger "Installing yay AUR helper..."
+    install_yay_aur
+    logger "Installing system packages..."
+    install_packages
+    logger "Installing flatpaks..."
+    install_flatpaks
+    logger "Installing firefox theme..."
+    install_firefox_theme
+    logger "Installing sdkman..."
+    install_sdkman
+    logger "Installing ghcup..."
+    install_ghcup
+    logger "Removing unwanted gnome apps..."
+    remove_packages
+    logger "Installing gnome extensions..."
+    install_gnome_extensions
+    logger "Adding wifi networks..."
+    add_wifi_networks
+    logger "Installing fonts..."
+    install_fonts
+    logger "Installing icon pack..."
+    install_icon_pack
+    logger "Changing gnome settings..."
+    change_gnome_settings
+else
+    logger "Sourcing the script..."
+fi
+
+
 
