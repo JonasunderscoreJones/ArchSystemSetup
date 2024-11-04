@@ -276,7 +276,10 @@ install_flatpaks() {
     download_file $FLATPAK_LIST_URL "flatpaks.txt"
 
     # Install the flatpaks
-    flatpak install --noninteractive --assumeyes - < flatpaks.txt
+    while read -r flatpak_id; do
+        [[ -n "$flatpak_id" ]] && flatpak install --noninteractive --assumeyes "$flatpak_id"
+    done < flatpaks.txt
+    #flatpak install --noninteractive --assumeyes < flatpaks.txt
 
     # Remove the flatpaks file
     rm flatpaks.txt
