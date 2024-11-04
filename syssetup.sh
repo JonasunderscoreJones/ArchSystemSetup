@@ -42,14 +42,36 @@ download_file() {
 
 install_gextension() {
     local i="$1"
-    VERSION_TAG=$(curl -Lfs "https://extensions.gnome.org/extension-query/?search=${i}" | jq '.extensions[0] | .shell_version_map | map(.pk) | max')
-    wget -O ${i}.zip "https://extensions.gnome.org/download-extension/${i}.shell-extension.zip?version_tag=$VERSION_TAG"
-    gnome-extensions install --force ${i}.zip
-    if ! gnome-extensions list | grep --quiet ${i}; then
-        busctl --user call org.gnome.Shell.Extensions /org/gnome/Shell/Extensions org.gnome.Shell.Extensions InstallRemoteExtension s ${i}
+
+    # Get the version tag
+    VERSION_TAG=$(curl -Lfs "https://extensions.gnome.org/extension-query/?search=${i}")
+    if [ $? -ne 0 ]; then
+        logger "ERROR: Failed to fetch version tag for ${i}" >> error.log
+        return 1  # Continue to the next steps, but log the error
     fi
-    gnome-extensions enable ${i}
-    rm ${i}.zip
+
+    # Extract the version tag using jq
+    VERSION_TAG=$(echo """$VERSION_TAG""" | jq '.extensions[0].shell_version_map | to_entries | max_by(.key | tonumber) | .value.version')
+    logger $VERSION_TAG
+
+    # Download the extension zip file
+    wget -O "${i}.zip" "https://extensions.gnome.org/extension-data/${i}.${VERSION_TAG}.shell-extension.zip"
+    if [ $? -ne 0 ]; then
+        logger "ERROR: Failed to download ${i}.zip" >> error.log
+        return 1  # Continue to the next steps, but log the error
+    fi
+
+    # Install the extension
+    gnome-extensions install --force "${i}.zip"
+    if ! gnome-extensions list | grep --quiet "${i}"; then
+        busctl --user call org.gnome.Shell.Extensions /org/gnome/Shell/Extensions org.gnome.Shell.Extensions InstallRemoteExtension s "${i}"
+    fi
+
+    # Enable the extension
+    gnome-extensions enable "${i}"
+
+    # Clean up
+    rm "${i}.zip"
 }
 
 add_wifi_network() {
