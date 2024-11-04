@@ -1,10 +1,10 @@
 #!/bin/bash
 
-FIREFOX_THEME_URL = "https://raw.githubusercontent.com/rafaelmardojai/firefox-gnome-theme/master/scripts/install-by-curl.sh"
+FIREFOX_THEME_URL="https://raw.githubusercontent.com/rafaelmardojai/firefox-gnome-theme/master/scripts/install-by-curl.sh"
 
-FLATPAK_LIST_URL = "https://syssetup.jonasjones.dev/flatpaks"
-PACKAGES_LIST_URL = "https://syssetup.jonasjones.dev/packages"
-GEXTENSIONS_LIST_URL = "https://syssetup.jonasjones.dev/gextensions"
+FLATPAK_LIST_URL= "https://syssetup.jonasjones.dev/flatpaks"
+PACKAGES_LIST_URL="https://syssetup.jonasjones.dev/packages"
+GEXTENSIONS_LIST_URL="https://syssetup.jonasjones.dev/gextensions"
 
 FONT_URL="https://download.jetbrains.com/fonts/JetBrainsMono-2.304.zip"
 TEMP_DIR=$(mktemp -d)
