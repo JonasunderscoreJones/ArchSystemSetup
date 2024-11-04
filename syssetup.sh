@@ -163,7 +163,7 @@ install_icon_pack() {
 }
 
 
-change_gnome_tweaks_settings() {
+change_gnome_settings() {
     # Add minimize and maximize buttons to the window title bar
     logger "Adding minimize and maximize buttons to the window title bar..."
     gsettings set org.gnome.desktop.wm.preferences button-layout '":minimize,maximize,close"'
@@ -347,4 +347,12 @@ logger "Removing unwanted gnome apps..."
 remove_packages
 logger "Installing gnome extensions..."
 install_gnome_extensions
+logger "Adding wifi networks..."
+add_wifi_networks
+logger "Installing fonts..."
+install_fonts
+logger "Installing icon pack..."
+install_icon_pack
+logger "Changing gnome settings..."
+change_gnome_settings
 
