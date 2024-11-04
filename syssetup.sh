@@ -70,6 +70,160 @@ install_gextension() {
     rm ${i}.zip
 }
 
+add_wifi_network() {
+    local SSID="$1"
+    local PASSWORD="$2"
+
+    # Check if NetworkManager is running
+    if ! systemctl is-active --quiet NetworkManager; then
+        echo "NetworkManager is not running. Starting it now..."
+        sudo systemctl start NetworkManager
+    fi
+
+    # Add Wi-Fi connection
+    nmcli dev wifi connect "$SSID" password "$PASSWORD"
+
+    # Check if the connection was successful
+    if [ $? -eq 0 ]; then
+        echo "Successfully connected to $SSID."
+    else
+        echo "Failed to connect to $SSID. Wifi may be out of range."
+    fi
+}
+
+
+add_wifi_networks() {
+    while IFS= read -r line; do
+        if [[ -n "$line" ]]; then
+            IFS=',' read -r ssid password <<< "$line"
+            add_wifi_network "$ssid" "$password"
+        fi
+    done < networks.txt
+
+}
+
+install_fonts() {
+    # Create the font directory if it doesn't exist
+    mkdir -p "$FONT_DIR"
+
+    # Download the font zip file
+    logger "Downloading JetBrains Mono font..."
+    curl -L -o "$TEMP_DIR/JetBrainsMono.zip" "$FONT_URL"
+
+    # Unzip the downloaded file
+    logger "Unzipping the font..."
+    unzip -q "$TEMP_DIR/JetBrainsMono.zip" -d "$TEMP_DIR"
+
+    # Move TTF fonts to the user's font directory
+    logger "Moving TTF fonts to $FONT_DIR..."
+    mv "$TTF_DIR"/*.ttf "$FONT_DIR"
+
+    # Clean up temporary files
+    rm -rf "$TEMP_DIR"
+
+    # Update the font cache
+    logger "Updating font cache..."
+    fc-cache -fv "$FONT_DIR"
+
+    # Set JetBrainsMonoNL-Bold.ttf as the default font for applications (example for GTK)
+    # You may need to adjust this part based on your specific environment or applications
+    logger "Setting $DEFAULT_FONT as the default font..."
+    # This command will vary depending on your desktop environment
+    # Here's an example for GTK:
+    gsettings set org.gnome.desktop.interface font-name "JetBrains Mono 10"
+
+    logger "Font installation and configuration completed."
+}
+
+install_icon_pack() {
+    # Create the icons directory if it doesn't exist
+    mkdir -p "$ICON_DIR"
+
+    # Download the icon pack
+    logger "Downloading Mkos Big Sur icon pack..."
+    curl -L -o "$TEMP_DIR/Mkos-Big-Sur.tar.xz" "$ICONPACK_URL"
+
+    # Extract the downloaded icon pack
+    logger "Extracting the icon pack..."
+    tar -xf "$TEMP_DIR/Mkos-Big-Sur.tar.xz" -C "$TEMP_DIR"
+
+    # Move the extracted icons to the user's icons directory
+    logger "Moving icons to $ICON_DIR..."
+    mv "$TEMP_DIR/$ICONPACK_NAME" "$ICON_DIR"
+
+    # Clean up temporary files
+    rm -rf "$TEMP_DIR"
+
+    # Set the icon theme using gsettings
+    logger "Setting $ICONPACK_NAME as the default icon theme..."
+    gsettings set org.gnome.desktop.interface icon-theme "$ICONPACK_NAME"
+
+    # Inform the user
+    logger "Icon pack installation completed."
+}
+
+
+change_gnome_tweaks_settings() {
+    # Add minimize and maximize buttons to the window title bar
+    logger "Adding minimize and maximize buttons to the window title bar..."
+    gsettings set org.gnome.desktop.wm.preferences button-layout '":minimize,maximize,close"'
+
+    # Enable resizing with the right mouse button
+    logger "Enabling resizing with the right mouse button..."
+    gsettings set org.gnome.desktop.wm.preferences resize-with-right-button true
+
+    # Set the clock format to show the date and 24-hour time
+    logger "Setting the clock format to show the date and 24-hour time..."
+    gsettings set org.gnome.desktop.interface clock-format '24h'
+
+    # Configure window movement shortcuts
+    logger "Setting up window movement shortcuts..."
+    gsettings set org.gnome.settings-daemon.plugins.media-keys move-to-workspace-left '["<Shift><Super>Page_Down"]'
+    gsettings set org.gnome.settings-daemon.plugins.media-keys move-to-workspace-right '["<Shift><Super>Page_Up"]'
+
+    # Disable application switcher shortcut
+    logger "Disabling application switcher shortcut..."
+    gsettings set org.gnome.settings-daemon.plugins.media-keys app-switch '[]'
+
+    # Set Alt+Tab for window switching
+    logger "Setting Alt+Tab for window switching..."
+    gsettings set org.gnome.settings-daemon.plugins.media-keys window-switch '["<Alt>Tab"]'
+
+    # Configure media control shortcuts
+    logger "Configuring media control shortcuts..."
+    gsettings set org.gnome.settings-daemon.plugins.media-keys next '["<Shift>F12"]'
+    gsettings set org.gnome.settings-daemon.plugins.media-keys play-pause '["<Shift>F11"]'
+    gsettings set org.gnome.settings-daemon.plugins.media-keys previous '["<Shift>F10"]'
+
+    # Set Ctrl+Q to close windows
+    logger "Setting Ctrl+Q to close windows..."
+    gsettings set org.gnome.settings-daemon.plugins.media-keys close '["<Ctrl>q"]'
+
+    # Show battery percentage
+    logger "Showing battery percentage..."
+    gsettings set org.gnome.desktop.interface show-battery-percentage true
+
+    # Enable automatic suspend only on battery power
+    logger "Setting automatic suspend only on battery..."
+    gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-timeout 0
+    gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-battery-timeout 30 # You can adjust the timeout as needed
+
+    # Enable dark mode
+    logger "Enabling dark mode..."
+    gsettings set org.gnome.desktop.interface gtk-theme 'Yaru-dark' # Adjust to your preferred dark theme
+
+    # Set touchpad scroll direction to traditional
+    logger "Setting touchpad scroll direction to traditional..."
+    gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll false
+
+    # Set keyboard layout to English (US, intl with dead keys)
+    logger "Setting keyboard layout to English (US, intl with dead keys)..."
+    gsettings set org.gnome.desktop.input-sources sources "[('xkb', 'us:intl')]"
+
+    # Provide feedback
+    echo "All configurations have been applied."
+}
+
 
 install_yay_aur() {
     sudo pacman -Syyu yay --noconfirm
